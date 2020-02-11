@@ -20,7 +20,6 @@ const Modal = props => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">
-                {" "}
                 Error: {props.error.response.status}
               </h5>
               <Button addClass="close" label="x" click={props.close} />

@@ -2,7 +2,7 @@ import {
   GET_MESSAGES_SUCCSESS,
   GET_MESSAGES_FAILURE,
   SEND_MESSAGES_FAILURE,
-  CLOSE_MODAL
+  CLOSE_MODAL,
 } from "../store/actions";
 
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
   datetime: "",
   loading: true,
   error: "",
-  show: false
+  show: false,
+  chosenEmoji: {}
 };
 
 const reducer = (state = initialState, action) => {

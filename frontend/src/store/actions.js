@@ -13,7 +13,6 @@ export const sendMessagesSuccess = () => ({type: SEND_MESSAGES_SUCCESS});
 export const sendMessagesFailure = (error) => ({type: SEND_MESSAGES_FAILURE, error});
 export const closeModal = () => ({type: CLOSE_MODAL});
 
-
 export const getMessages = (datetime, data) => {
   return async (dispatch) => {
     try {
@@ -40,4 +39,3 @@ export const sendMessages = (data) => {
     }
   };
 };
-

@@ -1,33 +1,58 @@
 import React, { Component } from "react";
 import { MdSend } from "react-icons/md";
+import { FaRegSmile } from 'react-icons/fa';
 import Button from "../UI/Button/Button";
+import Picker from 'emoji-picker-react';
+import './SendMessageForm.css';
 
 class SendMessageForm extends Component {
   state = {
     message: "",
-    author: ""
+    author: "",
+    open: false,
+
   };
 
   submitFormHandler = e => {
     e.preventDefault();
-    this.props.onSubmit({ ...this.state });
+    const data = {author: this.state.author, message: this.state.message}
+    this.props.onSubmit(data);
     this.setState({ message: "" });
   };
 
   inputChangeHandler = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value, open: false
     });
   };
 
+  emojiHandler = (e, emoji) => {
+    e.preventDefault();
+    this.state.open &&
+    this.setState({message: this.state.message + emoji.emoji})
+  }
+
   render() {
-    const { author, message } = this.state;
+    const { author, message, open } = this.state;
+    let addclass = 'Picker';
+    open && (addclass += ' d-block')
     return (
       <form onSubmit={this.submitFormHandler}>
+        <div className={addclass}>
+          <Picker onEmojiClick={this.emojiHandler}/>
+        </div>
         <div
           className="input-group align-items-center"
           style={{ width: "95%", margin: "1.5em auto" }}
         >
+          <div className="mr-2">
+            <Button
+              type="button"
+              addClass="close"
+              label={<FaRegSmile style={{ fontSize: "40px", opacity: "0.5" }} />}
+              click= {() => this.setState({open: !open})}
+            />
+          </div>
           <input
             onChange={this.inputChangeHandler}
             type="text"

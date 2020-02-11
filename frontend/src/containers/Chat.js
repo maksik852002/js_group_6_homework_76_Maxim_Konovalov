@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, Fragment  } from "react";
+
 import { connect } from "react-redux";
 import { getMessages, sendMessages, closeModal } from "../store/actions";
 import SendMessageForm from "../components/SendMessageForm/SendMessageForm";
@@ -9,8 +10,10 @@ import Modal from '../components/UI/Modal/Modal';
 import './Chat.css'
 
 let interval = null;
+ 
 
 class Chat extends Component {
+
   componentDidMount() {
     interval = setInterval(
       () => this.props.getMessages(this.props.datetime, this.props.messages),
@@ -33,29 +36,31 @@ class Chat extends Component {
   render = () => {
     const { messages, loading, error, show, sendMessages, closeModal } = this.props;
     return (
-      <div className="backWrap">
-        {error && <Modal show={show} close={closeModal} error={error}/>}
-        {loading ? (
-          <Spinner />
-        ) : (
-          <div className='wrap'>
-            <div className="messageWrap">
-              {messages.map(el => (
-                <Messages
-                  key={el.id}
-                  author={el.author}
-                  date={el.datetime}
-                  message={el.message}
-                />
-              ))}
-              <div ref={el => { this.el = el }}/>
+      <Fragment>
+        <div className="backWrap">
+          {error && <Modal show={show} close={closeModal} error={error}/>}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <div className='wrap'>
+              <div className="messageWrap">
+                {messages.map(el => (
+                  <Messages
+                    key={el.id}
+                    author={el.author}
+                    date={el.datetime}
+                    message={el.message}
+                  />
+                ))}
+                <div ref={el => { this.el = el }}/>
+              </div>
+              <div className="formWrap">
+                <SendMessageForm onSubmit={sendMessages} />
+              </div>
             </div>
-            <div className="formWrap">
-              <SendMessageForm onSubmit={sendMessages} />
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </Fragment>
     );
   };
 };
